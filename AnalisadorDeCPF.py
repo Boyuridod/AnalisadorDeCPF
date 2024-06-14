@@ -1,3 +1,7 @@
+# Autor: Yuri David Silva Duarte
+# Instaram: @yuridsduarte
+# Linkedin: https://www.linkedin.com/in/yuri-duarte-050581208/
+
 # Declaração de variáveis
 CPF = ""
 digitos = []
