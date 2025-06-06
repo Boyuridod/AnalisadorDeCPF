@@ -56,8 +56,6 @@ cd AnalisadorDeCPF
 python AnalisadorDeCPF.py
 ```
 
-(ou substitua pelo comando da linguagem usada)
-
 ---
 
 ## 📚 Referências
