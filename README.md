@@ -21,10 +21,10 @@ Se tudo estiver correto, o CPF é considerado **válido**.
 
 ```txt
 Entrada: 123.456.789-09  
-Saída: CPF inválido ❌
+Saída: {'valido': False, 'regiao': None}
 
 Entrada: 529.982.247-25  
-Saída: CPF válido ✅
+Saída: {'valido': True, 'regiao': '7) ES e RJ'}
 ````
 
 ---
@@ -41,7 +41,7 @@ Saída: CPF válido ✅
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/analisador-cpf.git
+git clone https://github.com/Boyuridod/AnalisadorDeCPF.git
 ```
 
 2. Acesse a pasta:
