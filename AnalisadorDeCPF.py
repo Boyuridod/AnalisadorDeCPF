@@ -2,14 +2,8 @@
 # Instaram: @yuridsduarte
 # Linkedin: https://www.linkedin.com/in/yuri-duarte-050581208/
 
-# Declaração de variáveis
-CPF = ""
-digitos = []
-isCorreto = True
-teste = 0
-
 # Função que descobre a região fiscal
-def DescobreRegiao(n):
+def descobreRegiao(n):
 
     if(n == 1): return "1) DF, GO, MS, MT e TO"
     elif(n == 2): return "2) AC, AM, AP, PA, RO e RR"
@@ -22,59 +16,51 @@ def DescobreRegiao(n):
     elif(n == 9): return "9) PR e SC"
     elif(n == 0): return "0) RS"
 
-# Receber os dados
-while(True):
-    CPF = input("Digite seu CPF: ")
+# Função que faz a análise do CPF
+def analisaCPF(cpf):
+    cpf = list(cpf)
 
-    if(len(CPF) != 11 and len(CPF) != 14):
-        print("Quantidade de caracteres insuficiente!")
+    cpf = [int(c) for c in cpf if c.isdigit()]
 
-    try:
-        # Converter os dados
-        for i in CPF:
-            if(i != "." and i != "-"):
-                digitos.append(int(i))
+    analise = {
+        "valido": False,
+        "regiao": None
+    }
 
-        break
-
-    except:
-        print("Confira se todos os caracteres digitados são números!")
-
-# Processando os dados
-
-for i in range(9):
-    teste += digitos[i] * (10 - i)
-
-if((teste % 11) < 2):
-    teste = 0
-
-else:
-    teste = 11 - (teste % 11)
-
-if(digitos[9] == teste):
-    teste = 0
-
-    for i in range(0,10):
-        teste += digitos[i] * (11 - i)
-
-    if((teste % 11) < 2):
+    if(len(cpf) == 11):
         teste = 0
-    else:
-        teste = 11 - (teste % 11)
 
-    if((digitos[10]) != teste):
-        isCorreto = False
+        # Calculo do 1° digito verificador
+        for i in range(9):
+            teste += cpf[i] * (10 - i)
 
-else:
-    isCorreto = False
+        if((teste % 11) < 2):
+            teste = 0
 
-# Saida de dados
-if(isCorreto):
-    print("Este é um CPF válido!!!")
-    print("A região fiscal em que foi emitido é:", DescobreRegiao(digitos[8]))
+        else:
+            teste = 11 - (teste % 11)
 
-else:
-    print("Este não é um CPF válido!!!")
+        # Calculo do 2° digito verificador
+        if(cpf[9] == teste):
+            teste = 0
 
-# FIXME Ainda é possível digitar 12, e 13 numeros e ele ser valido
-# FIXME Se digitar menos números ele para o código
+            for i in range(0, 10):
+                teste += cpf[i] * (11 - i)
+
+            if((teste % 11) < 2):
+                teste = 0
+            else:
+                teste = 11 - (teste % 11)
+
+            if((cpf[10]) == teste):
+                analise["valido"] = True
+                analise["regiao"] = descobreRegiao(cpf[8]) # Teste do 9° Dígito (Dígito da região fiscal)
+
+    return analise
+
+# print(analisaCPF("529.982.247-25")) # Válido | Região 7
+# print(analisaCPF("52998224725")) # Válido | Região 7
+# print(analisaCPF("123.456.654-01")) # Inválido
+# print(analisaCPF("12345678901")) # Inválido
+# print(analisaCPF("456")) # Inválido
+# print(analisaCPF("123,456-01")) # Inválido
